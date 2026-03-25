@@ -29,15 +29,11 @@ class _LoginscreenState extends State<Loginscreen> {
       ),):SingleChildScrollView(
           child:Column(
             children: [
-              Padding(
-                padding: const EdgeInsets.only(top:50),
-                child: Container(
-                  alignment:Alignment.centerLeft,
-                  child:IconButton(onPressed:(){
-                    
-                  },icon: Icon(Icons.arrow_back_ios))
+              Container(
+                  alignment:Alignment.center,
+                  child: Image.asset("assets/images/logochatlink.png")
                 ),
-              ),
+      
               SizedBox(height: 20),
               Container(
                 child:UiHelper.customText(

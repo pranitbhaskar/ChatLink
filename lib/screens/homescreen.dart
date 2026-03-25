@@ -2,6 +2,7 @@ import 'package:chat/screens/chatroom.dart';
 import 'package:chat/uihelper.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:chat/screens/loginscreen.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
@@ -84,7 +85,10 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver{
       appBar: AppBar(
         title: Text("Home Screen"),
         actions: [
-          IconButton(icon:Icon(Icons.logout),onPressed:(){},)
+          IconButton(icon:Icon(Icons.logout),onPressed:()async{
+            await FirebaseAuth.instance.signOut();
+            Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context)=>Loginscreen()), (route)=>false);
+          },)
         ],
         ),
       body: isloading

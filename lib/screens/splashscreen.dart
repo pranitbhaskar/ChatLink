@@ -14,10 +14,6 @@ class _SplashScreenState extends State<SplashScreen> {
   void initState()
   {
     super.initState();
-    Timer(Duration(seconds: 3),()
-    {
-       Navigator.pushReplacement(context,MaterialPageRoute(builder:(context)=>Loginscreen()));
-    });
   }
   @override
   Widget build(BuildContext context)

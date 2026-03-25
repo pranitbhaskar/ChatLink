@@ -1,4 +1,7 @@
+import 'package:chat/screens/homescreen.dart';
 import 'package:chat/screens/loginscreen.dart';
+import 'package:chat/screens/splashscreen.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
@@ -39,7 +42,33 @@ class MyApp extends StatelessWidget {
         colorScheme:ColorScheme.dark(),
       ),
       debugShowCheckedModeBanner: false,
-      home: Loginscreen(),
+      home: FutureBuilder(
+        future: Future.delayed(Duration(seconds: 3)),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return SplashScreen();
+          } else {
+            return StreamBuilder(
+              stream: FirebaseAuth.instance.authStateChanges(),
+              builder: (context, authSnapshot) {
+                if (authSnapshot.connectionState == ConnectionState.active) {
+                  if (authSnapshot.hasData) {
+                    return HomeScreen();
+                  } else if (authSnapshot.hasError) {
+                    return Center(child: Text('${authSnapshot.error}'));
+                  }
+                }
+                if (authSnapshot.connectionState == ConnectionState.waiting) {
+                  return const Center(
+                    child: CircularProgressIndicator(),
+                  );
+                }
+                return Loginscreen();
+              },
+            );
+          }
+        },
+      ),
     );
   }
 }
